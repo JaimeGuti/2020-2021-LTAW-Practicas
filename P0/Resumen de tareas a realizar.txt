@@ -1,6 +1,6 @@
 Resumen de tareas a realizar
  Instalar Git. HECHO
- Instalar VSCode
+ Instalar VSCode HECHO
  Crearte cuenta en Github
  Enviar por la entrega de Aula virtual la URL de tu usuario de github (Ej. https://github.com/Obijuan )
  Crearte el repositorio 2020-2021-LTAW-Practicas (A partir de este repositorio plantilla )
