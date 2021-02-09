@@ -4,5 +4,5 @@ Resumen de tareas a realizar
  Crearte cuenta en Github HECHO
  Enviar por la entrega de Aula virtual la URL de tu usuario de github (Ej. https://github.com/Obijuan ) HECHO
  Crearte el repositorio 2020-2021-LTAW-Practicas (A partir de este repositorio plantilla ) HECHO
- Hacer las actividades guiadas de la sesión, para aprender
+ Hacer las actividades guiadas de la sesión, para aprender HECHO
  Hacer las actividades NO guiadas (Ejercicios) para practicar
