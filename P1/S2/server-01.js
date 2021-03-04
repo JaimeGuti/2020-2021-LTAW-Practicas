@@ -19,3 +19,7 @@ function atender(req, res) {
 
 //-- Activar la función de retrollamada del servidor
 server.on('request', atender);
+
+//-- Activar el servidor. A la escucha de peitciones
+//-- en el puerto 8080
+server.listen(8080);
