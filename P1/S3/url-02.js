@@ -10,6 +10,7 @@ console.log("    * host: " + myURL.hostname);
 console.log("    * port: " + myURL.port);
 console.log("  * Ruta: " + myURL.pathname);
 console.log("  * Busqueda: " + myURL.search);
+console.log("  * Nombre usuario: " + myURL.username);
 
 //-- Recorrer todas las búsquedas
 myURL.searchParams.forEach((value, name)=>{
@@ -20,6 +21,8 @@ myURL.searchParams.forEach((value, name)=>{
 console.log("    * Artículo: " + myURL.searchParams.get('articulo'));
 console.log("    * Color: " + myURL.searchParams.get('color'));
 console.log("    * Otro: " + myURL.searchParams.get('otro'));
+console.log("  * Nombre usuario: " + myURL.searchParams.get('username'));
+console.log("  * Contraseña: " + myURL.searchParams.get('password'));
 
 //-- Ultima parte: Fragmento
 console.log("  * Fragmento: " + myURL.hash);
