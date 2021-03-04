@@ -1,6 +1,6 @@
 Resumen de tareas a realizar
  Instala node 14.5.5 -> HECHO
- Prueba los ejemplos de repaso de javascript -> 
- Prueba el ejemplo del temporizador -> 
- Prueba los ejemplos de servidores web, desde el 1 hasta el 5 -> 
- Usa la herramienta Network del navegador -> 
+ Prueba los ejemplos de repaso de javascript -> HECHO
+ Prueba el ejemplo del temporizador -> HECHO
+ Prueba los ejemplos de servidores web, desde el 1 hasta el 5 -> HECHO
+ Usa la herramienta Network del navegador -> HECHO
