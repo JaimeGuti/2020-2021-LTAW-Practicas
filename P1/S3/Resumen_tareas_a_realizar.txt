@@ -1,5 +1,5 @@
 Prueba los ejemplos del módulo URL -> HECHO
 Prueba los ejemplos del módulo HTTP -> HECHO
-Prueba los ejemplos del módulo FS -> 
+Prueba los ejemplos del módulo FS -> HECHO
 ¡Ya tienes todo lo necesario para hacer tu práctica! -> 
 Consulta la documentación de node para tener más información sobre cosas que necesites -> 
