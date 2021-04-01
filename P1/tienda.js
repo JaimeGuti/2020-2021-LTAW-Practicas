@@ -45,6 +45,21 @@ const server = http.createServer((req, res) => {
 
     const myURL = new URL(req.url, 'http://' + req.headers['host']);
     const recurso = myURL.pathname;
+
+    const type = {
+      "plain": "text/plain",
+      "html": "text/html",
+      "css": "text/css",
+      "jpeg": "image/jpeg",
+      "jpg": "image/jpg",
+      "png": "image/png",
+      "mp4": "video/mp4",
+      "gif": "image/gif",
+      "ico": "image/x-icon"
+    };
+  
+    let contType = type[recurso.split(".")[1]]
+
     fs.readFile(recurso, function(err, page){
       //-- Valores de la respuesta por defecto
       let code = 200;
@@ -61,7 +76,7 @@ const server = http.createServer((req, res) => {
       //-- code, code_msg y page
       res.statusCode = code;
       res.statusMessage = code_msg;
-      res.setHeader('Content-Type','text/html');
+      res.writeHead(code, {'Content-Type': type});
       res.write(page);
       res.end();
     })
