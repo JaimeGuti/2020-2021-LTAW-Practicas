@@ -5,6 +5,8 @@ const http = require('http');
 // Importar módulo fs
 const fs = require('fs');
 
+const url = require('url');
+
 //-- Definir el puerto a utilizar
 const PUERTO = 9000;
 
@@ -43,43 +45,60 @@ const server = http.createServer((req, res) => {
   //-- Imprimir información de la petición
   print_info_req(req);
 
-    const myURL = new URL(req.url, 'http://' + req.headers['host']);
-    const recurso = myURL.pathname;
+  const myURL = new URL(req.url, 'http://' + req.headers['host']);
+  let recurso = "";
 
-    const type = {
-      "plain": "text/plain",
-      "html": "text/html",
-      "css": "text/css",
-      "jpeg": "image/jpeg",
-      "jpg": "image/jpg",
-      "png": "image/png",
-      "mp4": "video/mp4",
-      "gif": "image/gif",
-      "ico": "image/x-icon"
-    };
-  
-    let contType = type[recurso.split(".")[1]]
+  // Imprimir recurso solicitado
+  console.log("Recurso: " + myURL.pathname);
+      
+  //Gestionar la petición
+  if (myURL.pathname == "/") { //Petición raíz
+      recurso = "tienda.html";
+  } else { // Otras peticiones
+      recurso = myURL.pathname.substr(1);
+      //recurso = recurso.split("/")[1];
+  }
 
-    fs.readFile(recurso, function(err, page){
-      //-- Valores de la respuesta por defecto
-      let code = 200;
-      let code_msg = "OK";
-      page = pagina_main;
-      //-- Cualquier recurso que no exista genera un error
-      if (recurso != '/'){ // CAMBIAR
-        code = 404;
-        code_msg = "Not Found";
-        page = pagina_error;
-      }
+  const type = {
+    "plain": "text/plain",
+    "html": "text/html",
+    "css": "text/css",
+    "jpeg": "image/jpeg",
+    "jpg": "image/jpg",
+    "png": "image/png",
+    "mp4": "video/mp4",
+    "gif": "image/gif",
+    "ico": "image/x-icon"
+  };
+    
+  let contType = "";
+  contType = type[recurso.split(".")[1]];
+  console.log("Content Type: " + contType);
 
-      //-- Generar la respuesta en función de las variables
-      //-- code, code_msg y page
-      res.statusCode = code;
-      res.statusMessage = code_msg;
-      res.writeHead(code, {'Content-Type': type});
-      res.write(page);
-      res.end();
-    })
+  fs.readFile(recurso, function(err, data){
+    //-- Valores de la respuesta por defecto
+    let code = "";
+    let code_msg = "";
+    //-- Cualquier recurso que no exista genera un error
+    if (err){
+      code = 404;
+      code_msg = "Not Found";
+      recurso = "error.html";
+      contType = type[recurso.split(".")[1]];
+      data = pagina_error;
+    }else{
+      code = 200;
+      code_msg = "OK";
+    }
+
+    //-- Generar la respuesta en función de las variables
+    res.statusCode = code;
+    res.statusMessage = code_msg;
+    res.writeHead(code, {'Content-Type': contType});
+    console.log("Status: "+code+" "+code_msg);
+    res.write(data);
+    res.end();
+  });
 });
 
 //-- Activar el servidor:
