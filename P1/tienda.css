@@ -10,16 +10,27 @@ body {
     border-color: red;
 }
 
+#home {
+    height: 50px;
+    width: 50px;
+    border-style: double;
+    border-color: red;
+}
+
 #producto {
     color: black;
     text-align: center;
-    height: 200px;
-    width: 200px;
+    height: 300px;
+    width: 300px;
     margin: auto;
-    padding: 150px;
+    padding-left: 200px;
+    padding-top: 100px;
 }
 
 #clickProducto {
-    height: 200px;
-    width: 200px;
+    height: 400px;
+    width: 400px;
+    float: left;
+    padding-left: 100px;
+    padding-top: 100px;
 }
