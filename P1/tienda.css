@@ -3,11 +3,18 @@ body {
     background-color: lightgray;
 }
 
+#cabecera {
+    height: 200px;
+    width: 100%;
+    border-style: double;
+    border-color: red;
+}
+
 #producto {
     color: black;
     text-align: center;
     height: 200px;
     width: 200px;
-    margin:auto;
+    margin: auto;
     padding: 150px;
 }
