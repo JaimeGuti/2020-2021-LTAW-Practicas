@@ -18,3 +18,8 @@ body {
     margin: auto;
     padding: 150px;
 }
+
+#clickProducto {
+    height: 200px;
+    width: 200px;
+}
