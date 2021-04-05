@@ -1,6 +1,6 @@
 
 body {
-    background-color: lightgray;
+    background-color: olive;
 }
 
 #cabecera {
@@ -14,7 +14,7 @@ body {
     height: 50px;
     width: 50px;
     border-style: double;
-    border-color: red;
+    border-color: black;
 }
 
 #producto {
