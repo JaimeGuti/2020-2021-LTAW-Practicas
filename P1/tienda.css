@@ -36,3 +36,10 @@ body {
     padding-top: 40px;
     color: white;
 }
+
+#errores {
+    height: 100%;
+    width: 100%;
+    color: red;
+    text-align: center;
+}
