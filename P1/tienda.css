@@ -1,6 +1,6 @@
 
 body {
-    background-color: olive;
+    background-color: #2E4053;
 }
 
 #cabecera {
@@ -13,12 +13,13 @@ body {
 #home {
     height: 50px;
     width: 50px;
+    background-color: white;
     border-style: double;
-    border-color: black;
+    border-color: red;
 }
 
 #producto {
-    color: black;
+    color: white;
     text-align: center;
     height: 500px;
     width: 360px;
@@ -33,4 +34,5 @@ body {
     float: left;
     padding-left: 100px;
     padding-top: 40px;
+    color: white;
 }
