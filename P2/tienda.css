@@ -1,0 +1,45 @@
+
+body {
+    background-color: #2E4053;
+}
+
+#cabecera {
+    height: 200px;
+    width: 100%;
+    border-style: double;
+    border-color: red;
+}
+
+#home {
+    height: 50px;
+    width: 50px;
+    background-color: white;
+    border-style: double;
+    border-color: red;
+}
+
+#producto {
+    color: white;
+    text-align: center;
+    height: 500px;
+    width: 360px;
+    margin: auto;
+    padding-left: 160px;
+    padding-top: 40px;
+}
+
+#clickProducto {
+    height: 500px;
+    width: 360px;
+    float: left;
+    padding-left: 100px;
+    padding-top: 40px;
+    color: white;
+}
+
+#errores {
+    height: 100%;
+    width: 100%;
+    color: red;
+    text-align: center;
+}
