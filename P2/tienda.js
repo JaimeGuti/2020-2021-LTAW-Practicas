@@ -13,6 +13,12 @@ const PUERTO = 9000;
 const pagina_main = fs.readFileSync("tienda.html");
 const pagina_error = fs.readFileSync("error.html");
 
+//-- Guardar nombre del fichero de base de datos
+const FICHERO_JSON = "tienda.json"
+
+//-- Leer la base de datos
+const  tienda_json = fs.readFileSync(FICHERO_JSON);
+
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
 
