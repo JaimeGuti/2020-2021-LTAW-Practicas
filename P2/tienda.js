@@ -23,13 +23,10 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 const tienda = JSON.parse(tienda_json);
 
 //-- Conseguir array con los productos
-let productos = tienda[1]['productos'];
+let productos = tienda[1]['productos'][0];
 console.log(productos)
 
-//-- Recorrer el array de productos PARA PROBAR
-tienda.forEach((element, index)=>{
-  console.log("Precio: " + (index + 1) + ": " + productos[index]['precio']);
-});
+
 
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
