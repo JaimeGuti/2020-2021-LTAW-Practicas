@@ -22,6 +22,15 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
 
+//-- Conseguir array con los productos
+let productos = tienda[1]['productos'];
+console.log(productos)
+
+//-- Recorrer el array de productos PARA PROBAR
+tienda.forEach((element, index)=>{
+  console.log("Producto: " + (index + 1) + ": " + productos[index]['nombre producto']);
+});
+
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
 
