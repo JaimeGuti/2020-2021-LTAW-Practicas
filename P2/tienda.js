@@ -16,6 +16,9 @@ const pagina_error = fs.readFileSync("error.html");
 //-- Guardar nombre del fichero de base de datos
 const FICHERO_JSON = "tienda.json"
 
+//-- Crear la estructura tienda a partir del contenido del fichero
+const tienda = JSON.parse(tienda_json);
+
 //-- Leer la base de datos
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
 
