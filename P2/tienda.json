@@ -1,44 +1,53 @@
 [
-    [
-        {
-            "login": "root",
-            "nombre": "root",
-            "correo": "root"
-        },
-        {
-            "login": "el usuario",
-            "nombre": "Usuario Apellido Apellido",
-            "correo": "elcorreodelusuario@correo.com"
-        }
-    ],
+    { "usuarios":
+        [
+            {
+                "login": "root",
+                "nombre": "root",
+                "correo": "root"
+            },
+            {
+                "login": "el usuario",
+                "nombre": "Usuario Apellido Apellido",
+                "correo": "elcorreodelusuario@correo.com"
+            }
+        ]
+    },
+ 
 
-    [
-        {
-            "nombre producto": "producto 1",
-            "descripción": "Esta es la descripción del producto 1",
-            "precio": "10 €",
-            "stock": "5"
-        },
-        {
-            "nombre producto": "producto 2",
-            "descripción": "Esta es la descripción del producto 2",
-            "precio": "15 €",
-            "stock": "10"
-        },
-        {
-            "nombre producto": "producto 3",
-            "descripción": "Esta es la descripción del producto 3",
-            "precio": "20 €",
-            "stock": "15"
-        }
-    ],
+    { "productos":
+        [
+            {
+                "nombre producto": "producto 1",
+                "descripción": "Esta es la descripción del producto 1",
+                "precio": "10 €",
+                "stock": "5"
+            },
+            {
+                "nombre producto": "producto 2",
+                "descripción": "Esta es la descripción del producto 2",
+                "precio": "15 €",
+                "stock": "10"
+            },
+            {
+                "nombre producto": "producto 3",
+                "descripción": "Esta es la descripción del producto 3",
+                "precio": "20 €",
+                "stock": "15"
+            }
+        ]
+    },
 
-    [
-        {
-            "nombre usuario": "",
-            "dirección envío": "",
-            "número de la tarjeta": "",
-            "productos": []
-        }
-    ]
+
+    { "pedidos":
+        [
+            {
+                "nombre usuario": "",
+                "dirección envío": "",
+                "número de la tarjeta": "",
+                "productos": []
+            }
+        ]
+    }
+
 ]
