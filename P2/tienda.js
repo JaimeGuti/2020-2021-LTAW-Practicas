@@ -28,7 +28,7 @@ console.log(productos)
 
 //-- Recorrer el array de productos PARA PROBAR
 tienda.forEach((element, index)=>{
-  console.log("Producto: " + (index + 1) + ": " + productos[index]['nombre producto']);
+  console.log("Precio: " + (index + 1) + ": " + productos[index]['precio']);
 });
 
 //-- Imprimir información sobre el mensaje de solicitud
