@@ -51,3 +51,9 @@ body {
     border-color: red;
     text-align: center;
 }
+
+#login{
+    float: right;
+    color: white;
+    padding-top: 0.5px;
+}
