@@ -43,3 +43,11 @@ body {
     color: red;
     text-align: center;
 }
+
+#alCarrito {
+    height: 50px;
+    width: 250px;
+    border-style: double;
+    border-color: red;
+    text-align: center;
+}
