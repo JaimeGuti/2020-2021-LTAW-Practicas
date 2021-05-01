@@ -119,7 +119,7 @@ const server = http.createServer((req, res) => {
   let content_type = "text/html";
   let content = FORMULARIO_LOGIN;
  
-  if (myURL.pathname == '/procesar') {
+  if (myURL.pathname == '/logueado.html') {
       content_type = "text/html";
  
       //-- Reemplazar las palabras claves por su valores
