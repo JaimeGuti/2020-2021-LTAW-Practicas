@@ -16,6 +16,9 @@ const pagina_error = fs.readFileSync("error.html");
 //-- Guardar nombre del fichero de base de datos
 const FICHERO_JSON = "tienda.json"
 
+//-- NOmbre del fichero JSON de salida
+const FICHERO_JSON_OUT = "tienda-mod.json"
+
 //-- Leer la base de datos
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
 
@@ -23,10 +26,25 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 const tienda = JSON.parse(tienda_json);
 
 //-- Conseguir array con los productos
-let productos = tienda[1]['productos'][0];
-console.log(productos)
+let productos = tienda[1]['productos'];
+//console.log(productos)
 
+//-- Convertir la variable a cadena JSON
+let myJSON = JSON.stringify(productos);
 
+//-- Guardarla en el fichero destino
+//////////////////////////////////////////////fs.writeFileSync(FICHERO_JSON_OUT, myJSON);
+
+//-- Cargar pagina web del formulario
+const FORMULARIO_LOGIN = fs.readFileSync('login.html','utf-8');
+
+//-- HTML de la página de respuesta
+const RESPUESTA_LOGIN = fs.readFileSync('logueado.html', 'utf-8');
+
+//-- Recorrer el array de productos PARA PROBAR
+//tienda.forEach((element, index)=>{
+//  console.log("Precio: " + (index + 1) + ": " + productos[index]['precio']);
+//});
 
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
@@ -36,17 +54,17 @@ function print_info_req(req) {
   console.log("====================");
   console.log("Método: " + req.method);
   console.log("Recurso: " + req.url);
-  console.log("Version: " + req.httpVersion)
+ // console.log("Version: " + req.httpVersion)
 
   //-- Construir el objeto url con la url de la solicitud
   const myURL = new URL(req.url, 'http://' + req.headers['host']);
   console.log("URL completa: " + myURL.href);
-  console.log("  * Origen: " + myURL.origin);
-  console.log("    * Protocolo: " + myURL.protocol);
-  console.log("    * host: " + myURL.hostname);
-  console.log("    * port: " + myURL.port);
-  console.log("  Ruta: " + myURL.pathname);
-  console.log("  * Busqueda: " + myURL.search);
+//  console.log("  * Origen: " + myURL.origin);
+//  console.log("    * Protocolo: " + myURL.protocol);
+//  console.log("    * host: " + myURL.hostname);
+//  console.log("    * port: " + myURL.port);
+//  console.log("  Ruta: " + myURL.pathname);
+//  console.log("  * Busqueda: " + myURL.search);
   console.log("  * Nombre usuario: " + myURL.username);
 }
 
@@ -64,7 +82,7 @@ const server = http.createServer((req, res) => {
   let recurso = "";
 
   // Imprimir recurso solicitado
-  console.log("Recurso: " + myURL.pathname);
+//  console.log("Recurso: " + myURL.pathname);
       
   //Gestionar la petición
   if (myURL.pathname == "/") { //Petición raíz
@@ -89,6 +107,27 @@ const server = http.createServer((req, res) => {
   let contType = "";
   contType = type[recurso.split(".")[1]];
   console.log("Content Type: " + contType);
+
+  //-- Leer LOGINS
+  let nombre = myURL.searchParams.get('nombre');
+  let apellidos = myURL.searchParams.get('apellidos');
+  console.log(" Nombre: " + nombre);
+  console.log(" Apellidos: " + apellidos);
+   
+ 
+  //-- Por defecto entregar formulario
+  let content_type = "text/html";
+  let content = FORMULARIO_LOGIN;
+ 
+  if (myURL.pathname == '/procesar') {
+      content_type = "text/html";
+ 
+      //-- Reemplazar las palabras claves por su valores
+      //-- en la plantilla HTML
+      content = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
+      content = content.replace("APELLIDOS", apellidos);
+  }
+ 
 
   fs.readFile(recurso, function(err, data){
     //-- Valores de la respuesta por defecto
