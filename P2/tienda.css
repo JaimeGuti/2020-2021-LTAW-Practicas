@@ -46,15 +46,15 @@ body {
 }
 
 #alCarrito {
-    height: 50px;
-    width: 250px;
     border-style: double;
     border-color: red;
     text-align: center;
+    position: relative;
+    top: 450px;
+    left: 150px;
 }
 
 #login{
     float: right;
     color: white;
-    padding-top: 0.5px;
 }
