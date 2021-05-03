@@ -16,7 +16,7 @@ const pagina_error = fs.readFileSync("error.html");
 //-- Guardar nombre del fichero de base de datos
 const FICHERO_JSON = "tienda.json"
 
-//-- NOmbre del fichero JSON de salida
+//-- Nombre del fichero JSON de salida
 const FICHERO_JSON_OUT = "tienda-mod.json"
 
 //-- Leer la base de datos
@@ -25,12 +25,8 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 //-- Crear la estructura tienda a partir del contenido del fichero
 const tienda = JSON.parse(tienda_json);
 
-//-- Conseguir array con los productos
-let productos = tienda[1]['productos'];
-//console.log(productos)
-
 //-- Convertir la variable a cadena JSON
-let myJSON = JSON.stringify(productos);
+//let myJSON = JSON.stringify(productos);
 
 //-- Guardarla en el fichero destino
 //////////////////////////////////////////////fs.writeFileSync(FICHERO_JSON_OUT, myJSON);
@@ -40,6 +36,12 @@ const FORMULARIO_LOGIN = fs.readFileSync('login.html','utf-8');
 
 //-- HTML de la página de respuesta
 const RESPUESTA_LOGIN = fs.readFileSync('logueado.html', 'utf-8');
+
+//-- Página de productos
+const PRODUCTO1 = fs.readFileSync('producto_1.html', 'utf-8');
+const PRODUCTO2 = fs.readFileSync('producto_2.html', 'utf-8');
+const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
+
 
 //-- Recorrer el array de productos PARA PROBAR
 //tienda.forEach((element, index)=>{
@@ -108,6 +110,47 @@ const server = http.createServer((req, res) => {
   contType = type[recurso.split(".")[1]];
   console.log("Content Type: " + contType);
 
+  //-- LEER PRODUCTOS DE BASE DE DATOS
+  let info;
+  //-- Conseguir array con los productos
+  //-- Producto 1
+  let prod1;
+  prod1 = PRODUCTO1;
+  info = tienda[1].productos[0]['nombre producto'];
+  prod1 = prod1.replace("NOMBRE", info);
+  info = tienda[1].productos[0]['descripción'];
+  prod1 = prod1.replace("DESCRIPCION", info);
+  info = tienda[1].productos[0]['precio'];
+  prod1 = prod1.replace("PRECIO", info);
+  info = tienda[1].productos[0]['stock'];
+  prod1 = prod1.replace("STOCK", info);
+
+  //-- Producto 2
+  let prod2;
+  prod2 = PRODUCTO2;
+  info = tienda[1].productos[1]['nombre producto'];
+  prod2 = prod2.replace("NOMBRE", info);
+  info = tienda[1].productos[1]['descripción'];
+  prod2 = prod2.replace("DESCRIPCION", info);
+  info = tienda[1].productos[1]['precio'];
+  prod2 = prod2.replace("PRECIO", info);
+  info = tienda[1].productos[1]['stock'];
+  prod2 = prod2.replace("STOCK", info);
+
+  //-- Producto 3
+  let prod3;
+  prod3 = PRODUCTO3;
+  info = tienda[1].productos[2]['nombre producto'];
+  prod3 = prod3.replace("NOMBRE", info);
+  info = tienda[1].productos[2]['descripción'];
+  prod3 = prod3.replace("DESCRIPCION", info);
+  info = tienda[1].productos[2]['precio'];
+  prod3 = prod3.replace("PRECIO", info);
+  info = tienda[1].productos[2]['stock'];
+  prod3 = prod3.replace("STOCK", info);
+
+
+
   //-- Leer LOGINS
   let nombre = myURL.searchParams.get('nombre');
   let apellidos = myURL.searchParams.get('apellidos');
@@ -116,19 +159,32 @@ const server = http.createServer((req, res) => {
    
  
   //-- Por defecto entregar formulario
-  let content_type = "text/html";
-  let content = FORMULARIO_LOGIN;
- 
-  if (myURL.pathname == '/logueado.html') {
-      content_type = "text/html";
- 
-      //-- Reemplazar las palabras claves por su valores
-      //-- en la plantilla HTML
-      content = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
-      content = content.replace("APELLIDOS", apellidos);
-  }
- 
+  //let contType = "text/html";
+  let user = FORMULARIO_LOGIN;
 
+  if (myURL.pathname == '/logueado.html') {
+    contType = "text/html";
+ 
+    //-- Reemplazar las palabras claves por su valores
+    //-- en la plantilla HTML
+    user = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
+    user = user.replace("APELLIDOS", apellidos);
+    console.log(" Nombre: " + nombre);
+    console.log(" Apellidos: " + apellidos);
+
+    //-- NECESITA RETOQUES
+    let html_extra = "HOLAAA";
+    if (nombre=="a" && apellidos=="b") {
+      html_extra = "<h2>Ya estás registrado</h2>";
+    }
+    user = user.replace("HTML_EXTRA", html_extra);
+ //   console.log(data);
+//    res.setHeader('Content-Type', contType);
+  //  res.write(data);
+  }
+
+  
+ 
   fs.readFile(recurso, function(err, data){
     //-- Valores de la respuesta por defecto
     let code = "";
@@ -141,6 +197,14 @@ const server = http.createServer((req, res) => {
       contType = type[recurso.split(".")[1]];
       data = pagina_error;
     }else{
+      if (recurso == "producto_1.html"){
+        data = prod1;
+      } else if (recurso == "producto_2.html"){
+        data = prod2;
+      } else if (recurso == "producto_3.html"){
+        data = prod3;
+      }
+
       code = 200;
       code_msg = "OK";
     }
