@@ -153,7 +153,7 @@ const server = http.createServer((req, res) => {
 
   //-- Reemplazar las palabras introducidas en la plantilla HTML
   user = RESPUESTA_LOGIN.replace("NOMBRE", nombre_user);
-  user = user.replace("APELLIDOS", nombre_real);
+  user = user.replace("NOMBRE_REAL", nombre_real);
   //-- Mensaje tras registro
   let html_extra = "";
   let html_extra_condicion = "";
