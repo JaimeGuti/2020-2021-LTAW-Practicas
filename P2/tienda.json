@@ -7,9 +7,9 @@
                 "correo": "root"
             },
             {
-                "login": "el usuario",
-                "nombre": "Usuario Apellido Apellido",
-                "correo": "elcorreodelusuario@correo.com"
+                "login": "usuario",
+                "nombre": "Usuario Apellido",
+                "correo": "usuario@correo.com"
             }
         ]
     },
