@@ -17,7 +17,7 @@ const pagina_error = fs.readFileSync("error.html");
 const FICHERO_JSON = "tienda.json"
 
 //-- Nombre del fichero JSON de salida
-const FICHERO_JSON_OUT = "tienda-mod.json"
+const FICHERO_JSON_OUT = "tiendaOUT.json"
 
 //-- Leer la base de datos
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
@@ -42,12 +42,6 @@ const PRODUCTO1 = fs.readFileSync('producto_1.html', 'utf-8');
 const PRODUCTO2 = fs.readFileSync('producto_2.html', 'utf-8');
 const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
 
-
-//-- Recorrer el array de productos PARA PROBAR
-//tienda.forEach((element, index)=>{
-//  console.log("Precio: " + (index + 1) + ": " + productos[index]['precio']);
-//});
-
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
 
@@ -67,7 +61,7 @@ function print_info_req(req) {
 //  console.log("    * port: " + myURL.port);
 //  console.log("  Ruta: " + myURL.pathname);
 //  console.log("  * Busqueda: " + myURL.search);
-  console.log("  * Nombre usuario: " + myURL.username);
+//  console.log("  * Nombre usuario: " + myURL.username);
 }
 
 //-- Crear el servidor
@@ -147,28 +141,32 @@ const server = http.createServer((req, res) => {
   prod3 = prod3.replace("STOCK", info);
 
   //-- LEER LOGINS
-  let nombre = myURL.searchParams.get('nombre');
-  let apellidos = myURL.searchParams.get('apellidos');
-  console.log(" Nombre: " + nombre);
-  console.log(" Apellidos: " + apellidos);
+  let nombre_user = myURL.searchParams.get('usuario');
+  let nombre_real = myURL.searchParams.get('nombre real');
+  let login1_BD = tienda[0].usuarios[0]['login'];
+  let nombre1_BD = tienda[0].usuarios[0]['nombre'];
+  let login2_BD = tienda[0].usuarios[1]['login'];
+  let nombre2_BD = tienda[0].usuarios[1]['nombre'];
    
   //-- Por defecto entregar formulario
   let user = FORMULARIO_LOGIN;
 
-  //-- Reemplazar las palabras claves por su valores
-  //-- en la plantilla HTML
-  user = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
-  user = user.replace("APELLIDOS", apellidos);
-  console.log(" Nombre: " + nombre);
-  console.log(" Apellidos: " + apellidos);
+  //-- Reemplazar las palabras introducidas en la plantilla HTML
+  user = RESPUESTA_LOGIN.replace("NOMBRE", nombre_user);
+  user = user.replace("APELLIDOS", nombre_real);
   //-- Mensaje tras registro
   let html_extra = "";
-  if (nombre=="a" && apellidos=="b") {
-    html_extra = "<h2>Ya estabas registrad@</h2>";
+  let html_extra_condicion = "";
+  if (nombre_user == login1_BD && nombre_real == nombre1_BD || 
+  nombre_user == login2_BD && nombre_real == nombre2_BD) {
+    html_extra = "<h2>Estás registrad@</h2>";
+    html_extra_condicion = "<h2>Llévame a comprar</h2>";
   } else {
-    html_extra = "<h2>Gracias por su registro</h2>";
+    html_extra = "<h2>No estás registrad@</h2>";
+    html_extra_condicion = "<h2>Volver a la página principal</h2>";
   }
   user = user.replace("HTML_EXTRA", html_extra);
+  user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
 
 
 
