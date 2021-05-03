@@ -18,19 +18,19 @@
     { "productos":
         [
             {
-                "nombre producto": "producto 1",
+                "nombre producto": "Producto 1",
                 "descripción": "Esta es la descripción del producto 1",
                 "precio": "10 €",
                 "stock": "5"
             },
             {
-                "nombre producto": "producto 2",
+                "nombre producto": "Producto 2",
                 "descripción": "Esta es la descripción del producto 2",
                 "precio": "15 €",
                 "stock": "10"
             },
             {
-                "nombre producto": "producto 3",
+                "nombre producto": "Producto 3",
                 "descripción": "Esta es la descripción del producto 3",
                 "precio": "20 €",
                 "stock": "15"
