@@ -10,7 +10,7 @@ const url = require('url');
 //-- Definir el puerto a utilizar
 const PUERTO = 9000;
 
-const pagina_main = fs.readFileSync("tienda.html");
+const PAGINA_MAIN = fs.readFileSync("tienda.html", 'utf-8');
 const pagina_error = fs.readFileSync("error.html");
 
 //-- Guardar nombre del fichero de base de datos
@@ -154,6 +154,8 @@ const server = http.createServer((req, res) => {
   //-- Reemplazar las palabras introducidas en la plantilla HTML
   user = RESPUESTA_LOGIN.replace("NOMBRE", nombre_user);
   user = user.replace("NOMBRE_REAL", nombre_real);
+  //-- Añadir nombre a página principal
+  //user = PAGINA_MAIN.replace("IDENTIFICARSE", nombre_user);
   //-- Mensaje tras registro
   let html_extra = "";
   let html_extra_condicion = "";
