@@ -114,8 +114,7 @@ const server = http.createServer((req, res) => {
   let info;
   //-- Conseguir array con los productos
   //-- Producto 1
-  let prod1;
-  prod1 = PRODUCTO1;
+  let prod1 = PRODUCTO1;
   info = tienda[1].productos[0]['nombre producto'];
   prod1 = prod1.replace("NOMBRE", info);
   info = tienda[1].productos[0]['descripción'];
@@ -126,8 +125,7 @@ const server = http.createServer((req, res) => {
   prod1 = prod1.replace("STOCK", info);
 
   //-- Producto 2
-  let prod2;
-  prod2 = PRODUCTO2;
+  let prod2 = PRODUCTO2;
   info = tienda[1].productos[1]['nombre producto'];
   prod2 = prod2.replace("NOMBRE", info);
   info = tienda[1].productos[1]['descripción'];
@@ -138,8 +136,7 @@ const server = http.createServer((req, res) => {
   prod2 = prod2.replace("STOCK", info);
 
   //-- Producto 3
-  let prod3;
-  prod3 = PRODUCTO3;
+  let prod3 = PRODUCTO3;
   info = tienda[1].productos[2]['nombre producto'];
   prod3 = prod3.replace("NOMBRE", info);
   info = tienda[1].productos[2]['descripción'];
@@ -149,42 +146,32 @@ const server = http.createServer((req, res) => {
   info = tienda[1].productos[2]['stock'];
   prod3 = prod3.replace("STOCK", info);
 
-
-
-  //-- Leer LOGINS
+  //-- LEER LOGINS
   let nombre = myURL.searchParams.get('nombre');
   let apellidos = myURL.searchParams.get('apellidos');
   console.log(" Nombre: " + nombre);
   console.log(" Apellidos: " + apellidos);
    
- 
   //-- Por defecto entregar formulario
-  //let contType = "text/html";
   let user = FORMULARIO_LOGIN;
 
-  if (myURL.pathname == '/logueado.html') {
-    contType = "text/html";
- 
-    //-- Reemplazar las palabras claves por su valores
-    //-- en la plantilla HTML
-    user = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
-    user = user.replace("APELLIDOS", apellidos);
-    console.log(" Nombre: " + nombre);
-    console.log(" Apellidos: " + apellidos);
-
-    //-- NECESITA RETOQUES
-    let html_extra = "HOLAAA";
-    if (nombre=="a" && apellidos=="b") {
-      html_extra = "<h2>Ya estás registrado</h2>";
-    }
-    user = user.replace("HTML_EXTRA", html_extra);
- //   console.log(data);
-//    res.setHeader('Content-Type', contType);
-  //  res.write(data);
+  //-- Reemplazar las palabras claves por su valores
+  //-- en la plantilla HTML
+  user = RESPUESTA_LOGIN.replace("NOMBRE", nombre);
+  user = user.replace("APELLIDOS", apellidos);
+  console.log(" Nombre: " + nombre);
+  console.log(" Apellidos: " + apellidos);
+  //-- Mensaje tras registro
+  let html_extra = "";
+  if (nombre=="a" && apellidos=="b") {
+    html_extra = "<h2>Ya estabas registrad@</h2>";
+  } else {
+    html_extra = "<h2>Gracias por su registro</h2>";
   }
+  user = user.replace("HTML_EXTRA", html_extra);
 
-  
- 
+
+
   fs.readFile(recurso, function(err, data){
     //-- Valores de la respuesta por defecto
     let code = "";
@@ -197,12 +184,18 @@ const server = http.createServer((req, res) => {
       contType = type[recurso.split(".")[1]];
       data = pagina_error;
     }else{
+      //-- Productos
       if (recurso == "producto_1.html"){
         data = prod1;
       } else if (recurso == "producto_2.html"){
         data = prod2;
       } else if (recurso == "producto_3.html"){
         data = prod3;
+      }
+      //-- Login
+      if (recurso == 'logueado.html') {
+        contType = "text/html";
+        data = user;
       }
 
       code = 200;
