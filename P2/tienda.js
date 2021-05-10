@@ -64,6 +64,45 @@ function print_info_req(req) {
 //  console.log("  * Nombre usuario: " + myURL.username);
 }
 
+  //-- Cookie para el nombre de usuario
+  //-- Analizar la cookie y devolver el nombre del
+//-- usuario si existe, o null en caso contrario
+function get_user(req) {
+
+  //-- Leer la Cookie recibida
+  const cookie = req.headers.cookie;
+
+  console.log("COOOOOOOOOKIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + req.headers.cookie);
+
+  //-- Hay cookie
+  if (cookie) {
+    console.log("COOOOOOOOOKIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + req.headers.cookie);
+    //-- Obtener un array con todos los pares nombre-valor
+    let pares = cookie.split(";");
+    
+    //-- Variable para guardar el usuario
+    let user;
+
+    //-- Recorrer todos los pares nombre-valor
+    pares.forEach((element, index) => {
+
+      //-- Obtener los nombres y valores por separado
+      let [nombre, valor] = element.split('=');
+
+      //-- Leer el usuario
+      //-- Solo si el nombre es 'user'
+      if (nombre.trim() === 'user') {
+        user = valor;
+      }
+    });
+    
+    //-- Si la variable user no está asignada
+    //-- se devuelve null
+    return user || null;
+
+  }
+}
+
 //-- Crear el servidor
 const server = http.createServer((req, res) => {
     
@@ -150,25 +189,40 @@ const server = http.createServer((req, res) => {
    
   //-- Por defecto entregar formulario
   let user = FORMULARIO_LOGIN;
+  let user_cookie = get_user(req);
 
   //-- Reemplazar las palabras introducidas en la plantilla HTML
   user = RESPUESTA_LOGIN.replace("NOMBRE", nombre_user);
   user = user.replace("NOMBRE_REAL", nombre_real);
   //-- Añadir nombre a página principal
-  //user = PAGINA_MAIN.replace("IDENTIFICARSE", nombre_user);
+  user = PAGINA_MAIN.replace("IDENTIFICARSE", nombre_user);
   //-- Mensaje tras registro
   let html_extra = "";
   let html_extra_condicion = "";
-  if (nombre_user == login1_BD && nombre_real == nombre1_BD || 
-  nombre_user == login2_BD && nombre_real == nombre2_BD) {
+  if (nombre_user == login1_BD && nombre_real == nombre1_BD ||
+    nombre_user == login2_BD && nombre_real == nombre2_BD) {
     html_extra = "<h2>Estás registrad@</h2>";
     html_extra_condicion = "<h2>Llévame a comprar</h2>";
+    //-- Login correcto, almaceno cookie
+    res.setHeader('Set-Cookie', "user=" + nombre_user);
+    
+    if (user_cookie != null) {
+      //-- Mostrar nombre de usuario
+      user = user_cookie.replace("HTML_EXTRA", html_extra);
+      user = user_cookie.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
+    }
   } else {
     html_extra = "<h2>No estás registrad@</h2>";
     html_extra_condicion = "<h2>Volver a la página principal</h2>";
   }
-  user = user.replace("HTML_EXTRA", html_extra);
-  user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
+
+  //-- Mostrar nombre de usuario
+ // user = user.replace("HTML_EXTRA", html_extra);
+ // user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
+
+
+  //-- AÑADIR AL CARRITO
+  
 
 
 
