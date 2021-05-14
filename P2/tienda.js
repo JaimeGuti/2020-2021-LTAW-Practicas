@@ -42,6 +42,9 @@ const PRODUCTO1 = fs.readFileSync('producto_1.html', 'utf-8');
 const PRODUCTO2 = fs.readFileSync('producto_2.html', 'utf-8');
 const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
 
+//-- Página para finalizar compra
+const COMPRA = fs.readFileSync('compra.html', 'utf-8');
+
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
 
@@ -64,19 +67,16 @@ function print_info_req(req) {
 //  console.log("  * Nombre usuario: " + myURL.username);
 }
 
-  //-- Cookie para el nombre de usuario
-  //-- Analizar la cookie y devolver el nombre del
+//-- Cookie para el nombre de usuario
+//-- Analizar la cookie y devolver el nombre del
 //-- usuario si existe, o null en caso contrario
 function get_user(req) {
 
   //-- Leer la Cookie recibida
   const cookie = req.headers.cookie;
 
-  console.log("COOOOOOOOOKIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + req.headers.cookie);
-
   //-- Hay cookie
   if (cookie) {
-    console.log("COOOOOOOOOKIEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE: " + req.headers.cookie);
     //-- Obtener un array con todos los pares nombre-valor
     let pares = cookie.split(";");
     
@@ -102,6 +102,40 @@ function get_user(req) {
 
   }
 }
+
+//-- Cookie para el carrito
+//-- Analizar la cookie y devolver el producto
+//-- si existe, o null en caso contrario
+function get_carrito(req, res, producto) {
+  //-- Leer la Cookie recibida
+  const cookie = req.headers.cookie;
+
+  if (cookie) {
+    //-- Obtener un array con todos los pares nombre-valor
+    let pares = cookie.split(";");
+
+    //-- Variable para guardar el producto
+    let productos;
+
+    //-- Recorrer todos los pares nombre-valor
+    pares.forEach((element, index) => {
+      //-- Obtener los nombre y los valores por separado
+      let [nombre, valor] = element.split('=');
+
+      //-- Leer el producto
+      //-- Solo si el nombre es 'carrito'
+      if (nombre.trim() === 'carrito') {
+        productos = valor;
+        res.setHeader('Set-Cookie', element + ':' + productos);
+      }
+    });
+    //-- Si la variable user no está asignada
+    //-- se devuelve null
+    return productos || null;
+  }
+}
+
+
 
 //-- Crear el servidor
 const server = http.createServer((req, res) => {
@@ -222,7 +256,8 @@ const server = http.createServer((req, res) => {
 
 
   //-- AÑADIR AL CARRITO
-  
+  //let pag_compra = COMPRA;
+  //producto = pag_compra.replace("PRODUCTOS_COMPRADOS", productos);
 
 
 
@@ -240,15 +275,18 @@ const server = http.createServer((req, res) => {
     }else{
       //-- Productos
       if (recurso == "producto_1.html"){
-        data = prod1;
+        data = prod1;       
       } else if (recurso == "producto_2.html"){
         data = prod2;
       } else if (recurso == "producto_3.html"){
         data = prod3;
       }
       //-- Login
-      if (recurso == 'logueado.html') {
-        contType = "text/html";
+      else if (recurso == 'logueado.html') {
+        //contType = "text/html";
+        data = user;
+      } else if (recurso == 'tienda.html'){
+        user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
         data = user;
       }
 
