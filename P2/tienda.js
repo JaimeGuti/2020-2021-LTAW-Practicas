@@ -205,11 +205,11 @@ const server = http.createServer((req, res) => {
 
   //-- LEER LOGINS
   let nombre_user = myURL.searchParams.get('usuario');
-  let nombre_real = myURL.searchParams.get('nombre real');
+  let pass = myURL.searchParams.get('contraseña');
   let login1_BD = tienda[0].usuarios[0]['login'];
-  let nombre1_BD = tienda[0].usuarios[0]['nombre'];
+  let pass1_BD = tienda[0].usuarios[0]['contraseña'];
   let login2_BD = tienda[0].usuarios[1]['login'];
-  let nombre2_BD = tienda[0].usuarios[1]['nombre'];
+  let pass2_BD = tienda[0].usuarios[1]['contraseña'];
    
   //-- Por defecto entregar formulario
   let user = FORMULARIO_LOGIN;
@@ -217,28 +217,23 @@ const server = http.createServer((req, res) => {
 
   //-- Reemplazar las palabras introducidas en la plantilla HTML
   user = RESPUESTA_LOGIN.replace("NOMBRE", nombre_user);
-  user = user.replace("NOMBRE_REAL", nombre_real);
   //-- Añadir nombre a página principal
-  user = PAGINA_MAIN.replace("IDENTIFICARSE", nombre_user);
+  //user = PAGINA_MAIN.replace("IDENTIFICARSE", nombre_user);
   //-- Mensaje tras registro
   let html_extra = "";
   let html_extra_condicion = "";
-  if (nombre_user == login1_BD && nombre_real == nombre1_BD ||
-    nombre_user == login2_BD && nombre_real == nombre2_BD) {
+  if (nombre_user == login1_BD && pass == pass1_BD ||
+    nombre_user == login2_BD && pass == pass2_BD) {
     html_extra = "<h2>Estás registrad@</h2>";
     html_extra_condicion = "<h2>Llévame a comprar</h2>";
     //-- Login correcto, almaceno cookie
     res.setHeader('Set-Cookie', "user=" + nombre_user);
-    
-    if (user_cookie != null) {
-      //-- Mostrar nombre de usuario
-      user = user_cookie.replace("HTML_EXTRA", html_extra);
-      user = user_cookie.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
-    }
   } else {
-    html_extra = "<h2>No estás registrad@</h2>";
+    html_extra = "<h2>¡Login incorrecto!</h2>";
     html_extra_condicion = "<h2>Volver a la página principal</h2>";
   }
+  user = user.replace("HTML_EXTRA", html_extra);
+  user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
 
   //-- Variables CARRITO
   let carrito = ALCARRO;

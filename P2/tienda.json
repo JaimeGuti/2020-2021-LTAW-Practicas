@@ -4,11 +4,13 @@
             {
                 "login": "root",
                 "nombre": "root",
+                "contraseña": "root",
                 "correo": "root"
             },
             {
                 "login": "usuario",
                 "nombre": "Usuario Apellido",
+                "contraseña": "1234",
                 "correo": "usuario@correo.com"
             }
         ]
