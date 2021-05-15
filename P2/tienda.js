@@ -126,7 +126,7 @@ function get_carrito(req) {
       //-- Solo si el nombre es 'carrito'
       if (nombre.trim() === 'carrito') {
         carrito = valor;
-        res.setHeader('Set-Cookie', element + ':' + carrito);
+        //res.setHeader('Set-Cookie', element + ':' + carrito);
       }
     });
     //-- Si la variable user no está asignada
@@ -254,21 +254,10 @@ const server = http.createServer((req, res) => {
  // user = user.replace("HTML_EXTRA", html_extra);
  // user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
 
-
-  //-- AÑADIR AL CARRITO
+  //-- Variables CARRITO
   let carrito = COMPRA;
+  let carro = "";
   let carrear = get_carrito(req);
-
-  //if (carrear != null) {
-  //  carro = carro.replace("PRODUCTO_AÑADIDO", carrear);
-  //} else {
-  //  carrear = "No hay ningún producto";
-  //  carro = carrear.replace("PRODUCTO_AÑADIDO", carrear);
-  //}
-  //let pag_compra = COMPRA;
-  //producto = pag_compra.replace("PRODUCTOS_COMPRADOS", productos);
-
-
 
   fs.readFile(recurso, function(err, data){
     //-- Valores de la respuesta por defecto
@@ -293,25 +282,22 @@ const server = http.createServer((req, res) => {
         data = prod3;
         tipoProd = "Producto 3";
       }
-      //-- Login
+      //-- LOGIN
       else if (recurso == 'logueado.html') {
         //contType = "text/html";
         data = user;
-      //-- Carrito
+      //-- CARRITO
       } else if (recurso == 'alCarro.html'){
       //  carro = tipoProd;
-        cesta = [];
-        if (carrear == null) {
+        if (carrear == null) { //-- Si el carro está vacío
           carro = tipoProd;
-          res.setHeader('Set-Cookie', carro);
+          res.setHeader('Set-Cookie', "carrito= " + carro);
           carrito = carrito.replace("PRODUCTO_AÑADIDO", tipoProd);
-          console.log("CARRITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO: " + carrito);
-        } else {
-          carro = carro + ", " + tipoProd;
-          res.setHeader('Set-Cookie', carro);
+        } else { //-- Si ya hay productos añadidos
+          carro = carrear + ", " + tipoProd;
+          res.setHeader('Set-Cookie', "carrito= " + carro);
           carrito = carrito.replace("PRODUCTO_AÑADIDO", tipoProd);
         }
-        console.log("CARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOO: " + carro);
         data = carrito;
       //-- Home
       } else if (recurso == 'tienda.html'){
@@ -321,8 +307,6 @@ const server = http.createServer((req, res) => {
 
       code = 200;
       code_msg = "OK";
-   //   console.log("CARROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO: " + carro);
-      console.log("CARREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR: " + carrear);
     }
 
     //-- Generar la respuesta en función de las variables
