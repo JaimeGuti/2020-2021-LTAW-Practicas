@@ -286,9 +286,14 @@ const server = http.createServer((req, res) => {
         data = carrito;
       //-- Finalizar compra 
       } else if (recurso == 'compra.html'){
-        let comprado;
-        comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear)
-        data = comprado;
+        if (user_cookie == null){
+          sinlogin = FORMULARIO_LOGIN;
+          data = sinlogin;
+        } else {
+          let comprado;
+          comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear)
+          data = comprado;
+        }
       //-- Home
       } else if (recurso == 'tienda.html'){
         user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
