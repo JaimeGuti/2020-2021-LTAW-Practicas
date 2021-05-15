@@ -1,4 +1,4 @@
-// SERVIDOR PRÁCTICA 1
+// SERVIDOR PRÁCTICA 2
 
 // Importar módulo http
 const http = require('http');
@@ -53,18 +53,10 @@ function print_info_req(req) {
   console.log("====================");
   console.log("Método: " + req.method);
   console.log("Recurso: " + req.url);
- // console.log("Version: " + req.httpVersion)
 
   //-- Construir el objeto url con la url de la solicitud
   const myURL = new URL(req.url, 'http://' + req.headers['host']);
   console.log("URL completa: " + myURL.href);
-//  console.log("  * Origen: " + myURL.origin);
-//  console.log("    * Protocolo: " + myURL.protocol);
-//  console.log("    * host: " + myURL.hostname);
-//  console.log("    * port: " + myURL.port);
-//  console.log("  Ruta: " + myURL.pathname);
-//  console.log("  * Busqueda: " + myURL.search);
-//  console.log("  * Nombre usuario: " + myURL.username);
 }
 
 //-- Cookie para el nombre de usuario
@@ -149,16 +141,12 @@ const server = http.createServer((req, res) => {
 
   const myURL = new URL(req.url, 'http://' + req.headers['host']);
   let recurso = "";
-
-  // Imprimir recurso solicitado
-//  console.log("Recurso: " + myURL.pathname);
       
   //Gestionar la petición
   if (myURL.pathname == "/") { //Petición raíz
       recurso = "tienda.html";
   } else { // Otras peticiones
       recurso = myURL.pathname.substr(1);
-      //recurso = recurso.split("/")[1];
   }
 
   const type = {
@@ -250,10 +238,6 @@ const server = http.createServer((req, res) => {
     html_extra_condicion = "<h2>Volver a la página principal</h2>";
   }
 
-  //-- Mostrar nombre de usuario
- // user = user.replace("HTML_EXTRA", html_extra);
- // user = user.replace("HTML_EXTRA_CONDICION", html_extra_condicion);
-
   //-- Variables CARRITO
   let carrito = COMPRA;
   let carro = "";
@@ -288,7 +272,6 @@ const server = http.createServer((req, res) => {
         data = user;
       //-- CARRITO
       } else if (recurso == 'alCarro.html'){
-      //  carro = tipoProd;
         if (carrear == null) { //-- Si el carro está vacío
           carro = tipoProd;
           res.setHeader('Set-Cookie', "carrito= " + carro);
