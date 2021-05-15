@@ -43,7 +43,7 @@ const PRODUCTO2 = fs.readFileSync('producto_2.html', 'utf-8');
 const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
 
 //-- Página para finalizar compra
-const COMPRA = fs.readFileSync('compra.html', 'utf-8');
+const COMPRA = fs.readFileSync('alCarro.html', 'utf-8');
 
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
@@ -106,7 +106,7 @@ function get_user(req) {
 //-- Cookie para el carrito
 //-- Analizar la cookie y devolver el producto
 //-- si existe, o null en caso contrario
-function get_carrito(req, res, producto) {
+function get_carrito(req) {
   //-- Leer la Cookie recibida
   const cookie = req.headers.cookie;
 
@@ -115,7 +115,7 @@ function get_carrito(req, res, producto) {
     let pares = cookie.split(";");
 
     //-- Variable para guardar el producto
-    let productos;
+    let carrito;
 
     //-- Recorrer todos los pares nombre-valor
     pares.forEach((element, index) => {
@@ -125,13 +125,13 @@ function get_carrito(req, res, producto) {
       //-- Leer el producto
       //-- Solo si el nombre es 'carrito'
       if (nombre.trim() === 'carrito') {
-        productos = valor;
-        res.setHeader('Set-Cookie', element + ':' + productos);
+        carrito = valor;
+        res.setHeader('Set-Cookie', element + ':' + carrito);
       }
     });
     //-- Si la variable user no está asignada
     //-- se devuelve null
-    return productos || null;
+    return carrito || null;
   }
 }
 
@@ -256,6 +256,15 @@ const server = http.createServer((req, res) => {
 
 
   //-- AÑADIR AL CARRITO
+  let carrito = COMPRA;
+  let carrear = get_carrito(req);
+
+  //if (carrear != null) {
+  //  carro = carro.replace("PRODUCTO_AÑADIDO", carrear);
+  //} else {
+  //  carrear = "No hay ningún producto";
+  //  carro = carrear.replace("PRODUCTO_AÑADIDO", carrear);
+  //}
   //let pag_compra = COMPRA;
   //producto = pag_compra.replace("PRODUCTOS_COMPRADOS", productos);
 
@@ -275,16 +284,36 @@ const server = http.createServer((req, res) => {
     }else{
       //-- Productos
       if (recurso == "producto_1.html"){
-        data = prod1;       
+        data = prod1;
+        tipoProd = "Producto 1";       
       } else if (recurso == "producto_2.html"){
         data = prod2;
+        tipoProd = "Producto 2";
       } else if (recurso == "producto_3.html"){
         data = prod3;
+        tipoProd = "Producto 3";
       }
       //-- Login
       else if (recurso == 'logueado.html') {
         //contType = "text/html";
         data = user;
+      //-- Carrito
+      } else if (recurso == 'alCarro.html'){
+      //  carro = tipoProd;
+        cesta = [];
+        if (carrear == null) {
+          carro = tipoProd;
+          res.setHeader('Set-Cookie', carro);
+          carrito = carrito.replace("PRODUCTO_AÑADIDO", tipoProd);
+          console.log("CARRITOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO: " + carrito);
+        } else {
+          carro = carro + ", " + tipoProd;
+          res.setHeader('Set-Cookie', carro);
+          carrito = carrito.replace("PRODUCTO_AÑADIDO", tipoProd);
+        }
+        console.log("CARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROOOOOOOOOOOOOOOOOOOOOO: " + carro);
+        data = carrito;
+      //-- Home
       } else if (recurso == 'tienda.html'){
         user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
         data = user;
@@ -292,6 +321,8 @@ const server = http.createServer((req, res) => {
 
       code = 200;
       code_msg = "OK";
+   //   console.log("CARROOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO: " + carro);
+      console.log("CARREAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAR: " + carrear);
     }
 
     //-- Generar la respuesta en función de las variables
