@@ -17,16 +17,17 @@ body {
     background-color: white;
     border-style: double;
     border-color: red;
+    float: left;
 }
 
 #producto {
     color: white;
     text-align: center;
     height: 500px;
-    width: 360px;
+    width: 300px;
     margin: auto;
-    padding-left: 160px;
-    padding-top: 40px;
+    padding-left: 50px;
+    padding-top: 100px;
 }
 
 #clickProducto {
@@ -66,10 +67,23 @@ body {
 #login{
     float: right;
     color: white;
+    padding-top: 20px;
 }
 
 #finalCompra {
     float: right;
     color: white;
     padding-right: 20px;
+    padding-top: 20px;
+}
+
+#cajaBusqueda{
+    float: left; 
+    padding-left: 5px; 
+    padding-top: 20px;
+}
+
+#textoBusqueda{
+    float: left; 
+    padding-left: 10px;
 }
