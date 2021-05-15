@@ -42,8 +42,10 @@ const PRODUCTO1 = fs.readFileSync('producto_1.html', 'utf-8');
 const PRODUCTO2 = fs.readFileSync('producto_2.html', 'utf-8');
 const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
 
+//-- Leer para añadir producto
+const ALCARRO = fs.readFileSync('alCarro.html', 'utf-8');
 //-- Página para finalizar compra
-const COMPRA = fs.readFileSync('alCarro.html', 'utf-8');
+const COMPRA = fs.readFileSync('compra.html', 'utf-8');
 
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
@@ -239,7 +241,7 @@ const server = http.createServer((req, res) => {
   }
 
   //-- Variables CARRITO
-  let carrito = COMPRA;
+  let carrito = ALCARRO;
   let carro = "";
   let carrear = get_carrito(req);
 
@@ -282,6 +284,11 @@ const server = http.createServer((req, res) => {
           carrito = carrito.replace("PRODUCTO_AÑADIDO", tipoProd);
         }
         data = carrito;
+      //-- Finalizar compra 
+      } else if (recurso == 'compra.html'){
+        let comprado;
+        comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear)
+        data = comprado;
       //-- Home
       } else if (recurso == 'tienda.html'){
         user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
