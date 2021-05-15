@@ -17,7 +17,7 @@ const pagina_error = fs.readFileSync("error.html");
 const FICHERO_JSON = "tienda.json"
 
 //-- Nombre del fichero JSON de salida
-const FICHERO_JSON_OUT = "tiendaOUT.json"
+const FICHERO_JSON_OUT = "tiendaPedidos.json"
 
 //-- Leer la base de datos
 const  tienda_json = fs.readFileSync(FICHERO_JSON);
@@ -26,10 +26,10 @@ const  tienda_json = fs.readFileSync(FICHERO_JSON);
 const tienda = JSON.parse(tienda_json);
 
 //-- Convertir la variable a cadena JSON
-//let myJSON = JSON.stringify(productos);
+//let myPedido = JSON.stringify(productos);
 
 //-- Guardarla en el fichero destino
-//////////////////////////////////////////////fs.writeFileSync(FICHERO_JSON_OUT, myJSON);
+//fs.writeFileSync(FICHERO_JSON_OUT, myPedido);
 
 //-- Cargar pagina web del formulario
 const FORMULARIO_LOGIN = fs.readFileSync('login.html','utf-8');
@@ -46,6 +46,9 @@ const PRODUCTO3 = fs.readFileSync('producto_3.html', 'utf-8');
 const ALCARRO = fs.readFileSync('alCarro.html', 'utf-8');
 //-- Página para finalizar compra
 const COMPRA = fs.readFileSync('compra.html', 'utf-8');
+//-- Compra finalizada
+const COMPRA_COMPLETADA = fs.readFileSync('compra_completada.html', 'utf-8');
+
 
 //-- Imprimir información sobre el mensaje de solicitud
 function print_info_req(req) {
@@ -224,7 +227,7 @@ const server = http.createServer((req, res) => {
   let html_extra_condicion = "";
   if (nombre_user == login1_BD && pass == pass1_BD ||
     nombre_user == login2_BD && pass == pass2_BD) {
-    html_extra = "<h2>Estás registrad@</h2>";
+    html_extra = "<h2>Está registrad@</h2>";
     html_extra_condicion = "<h2>Llévame a comprar</h2>";
     //-- Login correcto, almaceno cookie
     res.setHeader('Set-Cookie', "user=" + nombre_user);
@@ -239,6 +242,10 @@ const server = http.createServer((req, res) => {
   let carrito = ALCARRO;
   let carro = "";
   let carrear = get_carrito(req);
+
+  //-- COMPLETAR COMPRA
+  let direccion = myURL.searchParams.get('direccion');
+  let tarjeta = myURL.searchParams.get('tarjeta');
 
   fs.readFile(recurso, function(err, data){
     //-- Valores de la respuesta por defecto
@@ -267,6 +274,7 @@ const server = http.createServer((req, res) => {
       else if (recurso == 'logueado.html') {
         //contType = "text/html";
         data = user;
+
       //-- CARRITO
       } else if (recurso == 'alCarro.html'){
         if (carrear == null) { //-- Si el carro está vacío
@@ -286,9 +294,25 @@ const server = http.createServer((req, res) => {
           data = sinlogin;
         } else {
           let comprado;
-          comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear)
+          comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear);
           data = comprado;
         }
+      //  comprado = COMPRA_COMPLETADA.replace("PRODUCTOS_COMPRADOS", carrear);
+      //  data = comprado;
+      } if ((direccion != null) && (tarjeta != null)) {
+        let pedido = {
+          "user": user_cookie,
+          "dirección": direccion,
+          "tarjeta": tarjeta,
+          "productos": carrear
+        }
+        tienda[2]["pedidos"].push(pedido);
+        //-- Convertir a JSON y registrarlo
+        let myPedido = JSON.stringify(tienda);
+        fs.writeFileSync(FICHERO_JSON_OUT, myPedido);
+        //-- Confirmar pedido
+        comprado = COMPRA_COMPLETADA.replace("PRODUCTOS_COMPRADOS", carrear);
+        data = comprado;
       //-- Home
       } else if (recurso == 'tienda.html'){
         user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
