@@ -146,6 +146,7 @@ const server = http.createServer((req, res) => {
 
   const myURL = new URL(req.url, 'http://' + req.headers['host']);
   let recurso = "";
+  let busqueda = "";
       
   //Gestionar la petición
   if (myURL.pathname == "/") { //Petición raíz
@@ -163,7 +164,8 @@ const server = http.createServer((req, res) => {
     "png": "image/png",
     "mp4": "video/mp4",
     "gif": "image/gif",
-    "ico": "image/x-icon"
+    "ico": "image/x-icon",
+    "js" : "application/javascript"
   };
     
   let contType = "";
@@ -297,22 +299,87 @@ const server = http.createServer((req, res) => {
           comprado = COMPRA.replace("PRODUCTOS_COMPRADOS", carrear);
           data = comprado;
         }
-      //  comprado = COMPRA_COMPLETADA.replace("PRODUCTOS_COMPRADOS", carrear);
-      //  data = comprado;
       } if ((direccion != null) && (tarjeta != null)) {
         let pedido = {
-          "user": user_cookie,
-          "dirección": direccion,
-          "tarjeta": tarjeta,
+          "nombre usuario": user_cookie,
+          "dirección envío": direccion,
+          "número de la tarjeta": tarjeta,
           "productos": carrear
         }
         tienda[2]["pedidos"].push(pedido);
-        //-- Convertir a JSON y registrarlo
+        //-- Pasarlo a JSON y almacenarlo en BD
         let myPedido = JSON.stringify(tienda);
         fs.writeFileSync(FICHERO_JSON_OUT, myPedido);
         //-- Confirmar pedido
         comprado = COMPRA_COMPLETADA.replace("PRODUCTOS_COMPRADOS", carrear);
         data = comprado;
+
+      //-- BÚSQUEDA CON AUTOCOMPLETADO
+      } else if (recurso.startsWith == 'productos') {
+        //-- Leer fichero JSON con los productos
+        const PRODUCTOS_JSON = fs.readFileSync('tienda.json');
+        //-- Obtener el array de productos
+        let productos = JSON.parse(PRODUCTOS_JSON);
+        console.log("Peticion de Productos!")
+        content_type = "application/json";
+
+        //-- Leer los parámetros
+        let param1 = myURL.searchParams.get('param1');
+
+        param1 = param1.toUpperCase();
+
+        console.log("  Param: " +  param1);
+
+        let result = [];
+
+        for (let prod of productos) {
+
+          //-- Pasar a mayúsculas
+          prodU = prod.toUpperCase();
+
+          //-- Si el producto comienza por lo indicado en el parametro
+          //-- meter este producto en el array de resultados
+          if (prodU.startsWith(param1)) {
+              result.push(prod);
+          }
+            
+        }
+        console.log(result);
+        busqueda = result;
+        data = JSON.stringify(result);
+        contType = "application/json";
+
+        return
+    
+      } else if(myURL.pathname.startsWith('cliente.js')){
+        //-- Leer fichero javascript
+        console.log("recurso: " + recurso);
+        fs.readFile(recurso, 'utf-8', (err,data) => {
+            if (err) {
+                console.log("Error: " + err)
+                return;
+            } else {
+              res.setHeader('Content-Type', 'application/javascript');
+              contType = 'application/javascript';
+              res.writeHead(code, {'Content-Type': contType});
+              res.write(data);
+              res.end();
+            }
+        });
+        return;
+      }else if(recurso == 'buscar'){
+        //-- leer caja
+        let busqueda = myURL.searchParams.get('caja');
+        contType = 'application/javascript';
+        console.log("Busqueda: " + busqueda);
+        if (busqueda == "producto 1"){
+          data = prod1;
+        } else if (busqueda == "producto 2"){
+          data = prod2;
+        } else if (busqueda == "producto 3"){
+          data = prod3;
+        }
+
       //-- Home
       } else if (recurso == 'tienda.html'){
         user = PAGINA_MAIN.replace("IDENTIFICARSE", user_cookie);
