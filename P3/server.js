@@ -21,7 +21,7 @@ let num_users = 0;
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
-  res.send('Entra al chat!!!' + '<p><a href="/chat.html">Test</a></p>');
+  res.send('¡Bienvenid@!' + '<p><a href="/chat.html">Entrar al chat</a></p>');
 });
 
 //-- Esto es necesario para que el servidor le envíe al cliente la
