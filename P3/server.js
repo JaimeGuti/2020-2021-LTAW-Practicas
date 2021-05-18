@@ -47,6 +47,8 @@ io.on('connect', (socket) => {
   num_users = num_users + 1;
   console.log("Número de usuarios: " + num_users);
 
+
+
   //-- Evento de desconexión
   socket.on('disconnect', function(){
     console.log('** CONEXIÓN TERMINADA **'.yellow);
@@ -60,8 +62,25 @@ io.on('connect', (socket) => {
   socket.on("message", (msg)=> {
     console.log("Mensaje Recibido!: " + msg.blue);
 
-    //-- Reenviarlo a todos los clientes conectados
-    io.send(msg);
+    if (msg == "/help"){
+      socket.send("/help: Mostrará una lista con todos los comandos soportados" + "<p></p>" +
+      "/list: Devolverá el número de usuarios conectados" + "<p></p>" +
+      "/hello: El servidor nos devolverá el saludo" + "<p></p>" +
+      "/date: Nos devolverá la fecha" + "<p></p>");
+
+    } else if (msg == "/list") {
+      socket.send("Número de usuarios conectados: " + num_users);
+
+    } else if (msg == "/hello") {
+      socket.send("¡Hello, el servidor les saluda!");
+
+    } else if (msg == "/date") {
+      socket.send("IMPLEMENTAR FECHA");
+   
+    } else {
+      //-- Reenviarlo a todos los clientes conectados
+      io.send(msg);
+    }
 
   });
 
