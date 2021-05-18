@@ -36,6 +36,10 @@ app.use(express.static('public'));
 io.on('connect', (socket) => {
   
   console.log('** NUEVA CONEXIÓN **'.yellow);
+
+  //-- Mensaje de bienvenida
+  socket.send('¡Bienvenid@ al chat!');
+
   //-- Añadir un usuario
   num_users = num_users + 1;
   console.log("Número de usuarios: " + num_users);
