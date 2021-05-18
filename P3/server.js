@@ -43,6 +43,10 @@ io.on('connect', (socket) => {
   //-- Evento de desconexión
   socket.on('disconnect', function(){
     console.log('** CONEXIÓN TERMINADA **'.yellow);
+    if (num_users > 0){
+      num_users = num_users - 1;
+      console.log("Número de usuarios: " + num_users);
+    }
   });  
 
   //-- Mensaje recibido: Reenviarlo a todos los clientes conectados
