@@ -15,6 +15,9 @@ const server = http.Server(app);
 //-- Crear el servidor de websockets, asociado al servidor http
 const io = socket(server);
 
+//-- Inicializar variable número de usuarios
+let num_users = 0;
+
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
@@ -33,7 +36,9 @@ app.use(express.static('public'));
 io.on('connect', (socket) => {
   
   console.log('** NUEVA CONEXIÓN **'.yellow);
-
+  //-- Añadir un usuario
+  num_users = num_users + 1;
+  console.log("Número de usuarios: " + num_users);
 
   //-- Evento de desconexión
   socket.on('disconnect', function(){
