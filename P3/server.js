@@ -83,7 +83,10 @@ io.on('connect', (socket) => {
       socket.send(fecha.toDateString());
       //-- Fecha en el formato según la zona horaria UTC
       //socket.send(fecha.toGMTString());
-   
+      
+    } else if (msg.startsWith("/")) {
+      socket.send("Comando no reconocido");
+
     } else {
       //-- Reenviarlo a todos los clientes conectados
       io.send(msg);
