@@ -18,6 +18,10 @@ const io = socket(server);
 //-- Inicializar variable número de usuarios
 let num_users = 0;
 
+//-- Constante para la fecha
+const tiempo = Date.now();
+const fecha = new Date(tiempo);
+
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
@@ -63,7 +67,7 @@ io.on('connect', (socket) => {
     console.log("Mensaje Recibido!: " + msg.blue);
 
     if (msg == "/help"){
-      socket.send("/help: Mostrará una lista con todos los comandos soportados" + "<p></p>" +
+      socket.send("<p></p>" + "/help: Mostrará una lista con todos los comandos soportados" + "<p></p>" +
       "/list: Devolverá el número de usuarios conectados" + "<p></p>" +
       "/hello: El servidor nos devolverá el saludo" + "<p></p>" +
       "/date: Nos devolverá la fecha" + "<p></p>");
@@ -75,7 +79,10 @@ io.on('connect', (socket) => {
       socket.send("¡Hello, el servidor les saluda!");
 
     } else if (msg == "/date") {
-      socket.send("IMPLEMENTAR FECHA");
+      //-- Fecha en un formato legible por un humano
+      //socket.send(fecha.toDateString());
+      //-- Fecha en el formato según la zona horaria UTC
+      socket.send(fecha.toUTCString());
    
     } else {
       //-- Reenviarlo a todos los clientes conectados
