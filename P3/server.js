@@ -22,10 +22,13 @@ let num_users = 0;
 const tiempo = Date.now();
 const fecha = new Date(tiempo);
 
+//-- Nombre de usuario
+let nick;
+
 //-------- PUNTOS DE ENTRADA DE LA APLICACION WEB
 //-- Definir el punto de entrada principal de mi aplicación web
 app.get('/', (req, res) => {
-  res.send('¡Bienvenid@!' + '<p><a href="/chat.html">Entrar al chat</a></p>');
+  res.send('<p style = "text-align: center; margin-top: 20%;">¡Bienvenid@! </p>' + '<p style = "text-align: center; vertical-align: middle;"><a href="/chat.html">Entrar al chat</a></p>');
 });
 
 //-- Esto es necesario para que el servidor le envíe al cliente la
@@ -86,6 +89,7 @@ io.on('connect', (socket) => {
       
     } else if (msg.startsWith("/")) {
       socket.send("Comando no reconocido");
+      console.log("Se ha introducido un comando incorrecto");
 
     } else {
       //-- Reenviarlo a todos los clientes conectados
