@@ -80,9 +80,9 @@ io.on('connect', (socket) => {
 
     } else if (msg == "/date") {
       //-- Fecha en un formato legible por un humano
-      //socket.send(fecha.toDateString());
+      socket.send(fecha.toDateString());
       //-- Fecha en el formato según la zona horaria UTC
-      socket.send(fecha.toUTCString());
+      //socket.send(fecha.toGMTString());
    
     } else {
       //-- Reenviarlo a todos los clientes conectados
