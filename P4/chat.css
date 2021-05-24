@@ -4,6 +4,7 @@ h1 {
     background-color: lightgreen;
     border-radius: 10px;
     text-align: center;
+    border-style: solid;
   }
 
 .blue {
@@ -17,4 +18,22 @@ h1 {
 #display {
     border: 2px solid lightblue;
     padding: 10px;
+}
+
+#info_css {
+    float: left;
+    background-color: lightblue;
+    border-radius: 10px;
+    border-style: solid;
+    width: 300px;
+    height: 400px;
+}
+
+#msgs_css {
+    float: right;
+    background-color: white;
+    border-radius: 10px;
+    border-style: solid;
+    width: 300px;
+    height: 400px;
 }
