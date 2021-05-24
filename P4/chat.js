@@ -9,6 +9,7 @@ const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const print = document.getElementById("print");
+let msg_prueba = 1;
 
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
@@ -19,11 +20,12 @@ info3.textContent = process.versions.chrome;
 
 
 btn_test.onclick = () => {
-    display.innerHTML += "TEST! ";
+    display.innerHTML += "Mensaje recibido " + msg_prueba + "...<p></p>";
+    msg_prueba = msg_prueba + 1;
     console.log("Botón apretado!");
 
     //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('test', "MENSAJE DE PRUEBA: Boton apretado");
+    //electron.ipcRenderer.invoke('test', "MENSAJE DE PRUEBA: Boton apretado");
 }
 
 //-- Mensaje recibido del proceso MAIN
