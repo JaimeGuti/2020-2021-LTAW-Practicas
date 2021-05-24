@@ -11,10 +11,13 @@
 
     <link rel="stylesheet" href="chat.css">
 
+    <!-- Cargar la biblioteca Socket.IO. Nos la debe entregar el servidor -->
+    <script src="/socket.io/socket.io.js"></script>
+
     <!-- Cargar el proceso asociado a esta página -->
     <script src="chat.js" defer></script>
 
-    <title>Mi APP (version 10)</title>
+    <title>Chat P3</title>
 </head>
 <body>
     <h1>INTERFAZ GRÁFICA</h1>
@@ -23,9 +26,9 @@
     <hr>
     <h2>Información:</h2>
     <ul>
-        <li>Arquitectura: <span id="info1" class="blue"></span> </li>
-        <li>Plataforma: <span id="info2" class="blue"></span></li>
-        <li>Diretorio: <span id="info3" class="blue"></span></li>
+        <li>Versión de Node: <span id="info1" class="blue"></span> </li>
+        <li>Versión de Electron: <span id="info2" class="blue"></span></li>
+        <li>Versión de Chrome: <span id="info3" class="blue"></span></li>
     </ul>
 
     <hr>
