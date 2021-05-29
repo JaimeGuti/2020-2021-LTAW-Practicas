@@ -79,22 +79,29 @@ io.on('connect', (socket) => {
       "/list: Devolverá el número de usuarios conectados" + "<p></p>" +
       "/hello: El servidor nos devolverá el saludo" + "<p></p>" +
       "/date: Nos devolverá la fecha" + "<p></p>");
+      win.webContents.send('print', msg);
 
     } else if (msg == "/list") {
       socket.send("Número de usuarios conectados: " + num_users);
+      win.webContents.send('print', msg);
 
     } else if (msg == "/hello") {
       socket.send("¡Hello, el servidor les saluda!");
+      win.webContents.send('print', msg);
 
     } else if (msg == "/date") {
       //-- Fecha en un formato legible por un humano
       socket.send(fecha.toDateString());
       //-- Fecha en el formato según la zona horaria UTC
       //socket.send(fecha.toGMTString());
+      win.webContents.send('print', msg);
       
     } else if (msg.startsWith("/")) {
       socket.send("Comando no reconocido");
-      console.log("Se ha introducido un comando incorrecto");
+      wrong_msg = "Se ha introducido un comando incorrecto";
+      console.log(wrong_msg);
+      win.webContents.send('print', msg);
+      win.webContents.send('print', wrong_msg);
 
     } else {
       //-- Reenviarlo a todos los clientes conectados
