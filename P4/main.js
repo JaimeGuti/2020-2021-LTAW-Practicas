@@ -23,7 +23,7 @@ let num_users = 0;
 
 //-- Dirección IP
 let dir_ip = ip.address();
-console.log("IP: " + dir_ip);
+console.log("IP de la máquina: " + dir_ip);
 
 //-- Constante para la fecha
 const tiempo = Date.now();
@@ -141,7 +141,8 @@ electron.app.on('ready', () => {
   //-- y luego enviar el mensaje al proceso de renderizado para que 
   //-- lo saque por la interfaz gráfica
   win.on('ready-to-show', () => {
-    win.webContents.send('ip', dir_ip);
+    let msg_IP = "http://" + dir_ip + ":" + PUERTO + "/chat.html";
+    win.webContents.send('ip', msg_IP);
   });
 
   //-- Enviar un mensaje al proceso de renderizado para que lo saque
