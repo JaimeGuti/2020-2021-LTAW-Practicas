@@ -144,7 +144,7 @@ electron.app.on('ready', () => {
   //win.setMenuBarVisibility(false)
 
   //-- Cargar interfaz gráfica en HTML
-  win.loadFile("server.html");
+  win.loadFile("index.html");
 
   //-- Esperar a que la página se cargue y se muestre
   //-- y luego enviar el mensaje al proceso de renderizado para que 
