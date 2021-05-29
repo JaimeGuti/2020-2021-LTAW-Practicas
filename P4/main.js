@@ -98,6 +98,7 @@ io.on('connect', (socket) => {
     } else {
       //-- Reenviarlo a todos los clientes conectados
       io.send(msg);
+      win.webContents.send('print', msg);
     }
 
   });
@@ -145,10 +146,6 @@ electron.app.on('ready', () => {
     win.webContents.send('ip', msg_IP);
     console.log(msg_IP.red);
   });
-
-  //-- Enviar un mensaje al proceso de renderizado para que lo saque
-  //-- por la interfaz gráfica
-  win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
 
 });
 

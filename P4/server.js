@@ -28,14 +28,12 @@ btn_test.onclick = () => {
     display.innerHTML += "Mensaje recibido " + msg_prueba + "...<p></p>";
     msg_prueba = msg_prueba + 1;
     console.log("Botón apretado!");
-
-    //-- Enviar mensaje al proceso principal
-    electron.ipcRenderer.invoke('test', "MENSAJE DE PRUEBA: Boton apretado");
 }
 
 //-- Mensaje recibido del proceso MAIN
 electron.ipcRenderer.on('print', (event, message) => {
     console.log("Recibido: " + message);
+    display.innerHTML += message + "<p></p>";
     print.textContent = message;
 });
 
