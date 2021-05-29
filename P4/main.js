@@ -5,6 +5,7 @@ const socket = require('socket.io');
 const http = require('http');
 const express = require('express');
 const colors = require('colors');
+const ip = require('ip');
 
 const PUERTO = 8080;
 
@@ -19,6 +20,10 @@ const io = socket(server);
 
 //-- Inicializar variable número de usuarios
 let num_users = 0;
+
+//-- Dirección IP
+let dir_ip = ip.address();
+console.log("IP: " + dir_ip);
 
 //-- Constante para la fecha
 const tiempo = Date.now();
@@ -136,7 +141,7 @@ electron.app.on('ready', () => {
   //-- y luego enviar el mensaje al proceso de renderizado para que 
   //-- lo saque por la interfaz gráfica
   win.on('ready-to-show', () => {
-    win.webContents.send('print', "MENSAJE ENVIADO DESDE PROCESO MAIN");
+    win.webContents.send('ip', dir_ip);
   });
 
   //-- Enviar un mensaje al proceso de renderizado para que lo saque

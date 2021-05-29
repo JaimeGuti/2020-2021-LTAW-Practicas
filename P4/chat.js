@@ -8,6 +8,7 @@ const display = document.getElementById("display");
 const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
+const infoIP = document.getElementById("infoIP");
 const print = document.getElementById("print");
 let msg_prueba = 1;
 
@@ -32,4 +33,10 @@ btn_test.onclick = () => {
 electron.ipcRenderer.on('print', (event, message) => {
     console.log("Recibido: " + message);
     print.textContent = message;
+});
+
+//-- Mensaje recibido del proceso MAIN para IP
+electron.ipcRenderer.on('ip', (event, message) => {
+    console.log("IP: " + message);
+    infoIP.innerHTML = message;
 });
