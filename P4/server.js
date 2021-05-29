@@ -44,7 +44,7 @@ electron.ipcRenderer.on('ip', (event, message) => {
 });
 
 //-- Mensaje recibido del proceso MAIN para USUARIOS
-electron.ipcRenderer.on('users', (event, message) => {
+electron.ipcRenderer.on('infoUSERS', (event, message) => {
     console.log("Usuarios: " + message);
     infoUSERS.innerHTML = message;
 });

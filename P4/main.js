@@ -57,7 +57,7 @@ io.on('connect', (socket) => {
   //-- Añadir un usuario
   num_users = num_users + 1;
   console.log("Número de usuarios: " + num_users);
-
+  win.webContents.send('infoUSERS', num_users);
 
 
   //-- Evento de desconexión
@@ -66,6 +66,7 @@ io.on('connect', (socket) => {
     if (num_users > 0){
       num_users = num_users - 1;
       console.log("Número de usuarios: " + num_users);
+      win.webContents.send('infoUSERS', num_users);
     }
   });  
 
