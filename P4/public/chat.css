@@ -1,0 +1,21 @@
+
+body {
+    background-color: #996600;
+    color: white;
+    text-align: center;
+}
+
+#titulo {
+    font-size: 50px;
+    border-style: double;
+    border-color: white;
+}
+
+#msg_entry {
+    height: 50px;
+    width: 500px;
+    background-color: rgb(233, 229, 229);
+    border-style: double;
+    border-color: red;
+    float: center;
+}
