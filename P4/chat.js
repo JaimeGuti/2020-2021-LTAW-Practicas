@@ -9,8 +9,12 @@ const info1 = document.getElementById("info1");
 const info2 = document.getElementById("info2");
 const info3 = document.getElementById("info3");
 const infoIP = document.getElementById("infoIP");
+const infoUSERS = document.getElementById("infoUSERS");
 const print = document.getElementById("print");
 let msg_prueba = 1;
+//-- Inicializar variable número de usuarios
+let num_users = 0;
+infoUSERS.innerHTML = num_users;
 
 //-- Acceder a la API de node para obtener la info
 //-- Sólo es posible si nos han dado permisos desde
@@ -39,4 +43,10 @@ electron.ipcRenderer.on('print', (event, message) => {
 electron.ipcRenderer.on('ip', (event, message) => {
     console.log("IP: " + message);
     infoIP.innerHTML = message;
+});
+
+//-- Mensaje recibido del proceso MAIN para USUARIOS
+electron.ipcRenderer.on('users', (event, message) => {
+    console.log("Usuarios: " + message);
+    infoUSERS.innerHTML = message;
 });
